@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from .models import Complaint, ComplaintAssignment, ComplaintCategory
 from .serializers import ComplaintSerializer, ComplaintAssignmentSerializer
-from django.views.generic import TemplateView, ListView
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
-from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.generics import ListAPIView
 from rest_framework import generics, status
 from Categories.models import Category
@@ -33,6 +32,7 @@ DEPT_NAME_TO_CODE = {
 
 
 @api_view(['POST'])
+@parser_classes([MultiPartParser, FormParser, JSONParser])
 @permission_classes([IsAuthenticated])
 def createcomplaint(request):
     data = request.data.copy()

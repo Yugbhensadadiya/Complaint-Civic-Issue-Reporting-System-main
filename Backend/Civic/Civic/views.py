@@ -1421,7 +1421,12 @@ class ComplaintInDetail(APIView):
                 image_url = None
                 if comp.image_video:
                     try:
-                        image_url = comp.image_video.url if hasattr(comp.image_video, 'url') else str(comp.image_video)
+                        raw_url = comp.image_video.url if hasattr(comp.image_video, 'url') else str(comp.image_video)
+                        # Ensure absolute URL for frontend consumption
+                        if raw_url and not raw_url.startswith('http'):
+                            image_url = request.build_absolute_uri(raw_url)
+                        else:
+                            image_url = raw_url
                     except (ValueError, AttributeError):
                         image_url = None
                 
@@ -1474,7 +1479,11 @@ class ComplaintInDetail(APIView):
                     image_url = None
                     if comp.image_video:
                         try:
-                            image_url = comp.image_video.url if hasattr(comp.image_video, 'url') else str(comp.image_video)
+                            raw_url = comp.image_video.url if hasattr(comp.image_video, 'url') else str(comp.image_video)
+                            if raw_url and not raw_url.startswith('http'):
+                                image_url = request.build_absolute_uri(raw_url)
+                            else:
+                                image_url = raw_url
                         except (ValueError, AttributeError):
                             image_url = None
                     
