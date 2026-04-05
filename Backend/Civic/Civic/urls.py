@@ -28,6 +28,7 @@ from contact_us.views import ContactUSview
 from departments.views import OfficerDetail, department_profile, department_officers, department_complaints, department_performance, update_department_profile, department_dashboard, departments_overview, department_statistics, department_list_public
 from departments.admin_urls import urlpatterns as department_admin_urls
 from rest_framework_simplejwt.views import TokenRefreshView
+from Civic.views import test_email
 
 
 urlpatterns = [
@@ -123,4 +124,5 @@ urlpatterns = [
     path('api/department/upload-image/', views.DepartmentUploadImage.as_view(), name='department-upload-image'),
     path('api/UserDistrictWise/',views.UserDistrictWise.as_view(),name='UserDistrictWise'),
     path('api/user-registrations/monthly/', UserMonthlyRegistrations.as_view(), name='user-monthly-registrations'),
+    path('test-email/', test_email),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
